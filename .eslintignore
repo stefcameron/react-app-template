@@ -1,0 +1,8 @@
+# build output
+dist/
+
+# test output
+coverage/
+
+# third-party
+node_modules/

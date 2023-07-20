@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+
+:root {
+  /**
+   * FONTS
+   */
+
+  --app-font-family-default: 'Open Sans', sans-serif;
+  --app-font-family-monospace: monospace;
+
+  --app-font-weight-normal: 400;
+  --app-font-weight-semibold: 600;
+  --app-font-weight-bold: 700;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--app-font-family-default);
+  background-color: white;
+  color: #121212;
+}
+
+h1 {
+  cursor: default;
+  font-weight: var(--app-font-weight-semibold);
+}
+
+h2 {
+  cursor: default;
+  font-weight: var(--app-font-weight-semibold);
+}
+
+h3 {
+  cursor: default;
+  font-weight: var(--app-font-weight-semibold);
+}
+
+h4 {
+  cursor: default;
+  font-weight: var(--app-font-weight-semibold);
+}
+
+h5,
+h6 {
+  cursor: default;
+  font-style: italic;
+}
+
+p {
+  cursor: default;
+}
+
+pre,
+code {
+  cursor: default;
+  font-family: var(--app-font-family-monospace);
+}
+
+strong {
+  font-weight: var(--app-font-weight-bold);
+}

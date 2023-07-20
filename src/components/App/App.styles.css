@@ -1,0 +1,17 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 25vh;
+}
+
+.app > h1 {
+  color: lightslategray;
+}
+
+.app > h2 {
+  color: lightblue;
+  font-family: var(--app-font-family-monospace);
+}
