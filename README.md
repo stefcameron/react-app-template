@@ -7,6 +7,7 @@ and figure out why it isn't working if something comes up.
 - Framework: [React](https://react.dev/)
 - Styling: Pure CSS styles
   - Simply import your `.css` files into modules that use them.
+  - Use the `classnames` package (`import classnames from 'classnames'`) to combine classes.
 - Test runner: [Jest](https://jestjs.io/)
 - Testing framework: [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
   - All the tools come through the "global" `import { ... } from 'testingUtility'` module which
