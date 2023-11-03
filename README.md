@@ -29,7 +29,7 @@ $ npm install
 # installs all dependencies
 $ npm start
 # opens a browser to localhost:3000
-# set ST_PORT=XXXX env to run on a different port
+# set PORT=XXXX env to run on a different port
 
 $ npm fmt
 # formats the code using Prettier
