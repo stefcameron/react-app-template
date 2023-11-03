@@ -92,7 +92,7 @@ const loadBabelConfig = function () {
 const mkConfig = function () {
   const outputPath = path.resolve(__dirname, './dist');
   const indexPath = path.resolve(__dirname, './src/index.html');
-  const port = parseInt(process.env.ST_PORT ?? 3000);
+  const port = parseInt(process.env.PORT ?? 3000);
   const isDevBuild = process.env.NODE_ENV === 'development';
 
   return {
@@ -171,9 +171,13 @@ const mkConfig = function () {
 
     // webpack-dev-server configuration
     devServer: {
-      // configure any static assets to be served under the /static path in the browser
+      // configure any static assets to be served under the /static path in the browser, and to
+      //  be taken from the repo's `./static` directory; the result is anything in there is
+      //  referenceable as `/static/PATH/TO/FILE` at runtime
+      // NOTE: this is only for the Dev build when running the dev server; it has no bearing
+      //  on the Prod build (which would need it's own configuration)
       static: {
-        directory: path.resolve(__dirname, './src'),
+        directory: path.resolve(__dirname, './static'),
         publicPath: '/static/',
         watch: true,
       },
