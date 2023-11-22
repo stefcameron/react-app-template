@@ -16,7 +16,7 @@
   "author": "Stefan Cameron",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.23.0",
+    "@babel/cli": "^7.23.4",
     "@babel/core": "^7.23.3",
     "@babel/eslint-parser": "^7.23.3",
     "@babel/eslint-plugin": "^7.22.10",
