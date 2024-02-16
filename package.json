@@ -11,7 +11,8 @@
     "lint": "eslint \"{*,src/**/*,tools/**/*}.+(js|mjs|jsx)\"",
     "start": "NODE_ENV=development webpack-dev-server",
     "test:unit": "jest",
-    "test": "npm run fmt:check && npm run lint && npm run build && npm run test:unit"
+    "test:coverage": "jest --coverage",
+    "test": "npm run fmt:check && npm run lint && npm run build && npm run test:coverage"
   },
   "author": "Stefan Cameron",
   "license": "MIT",

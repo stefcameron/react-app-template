@@ -42,6 +42,14 @@ const mkConfig = function () {
       'src/**/[^.]*.{js,jsx}', // ignore .files like .eslintrc.js with `/[^.]` in this glob pattern
     ],
     coverageDirectory: './coverage',
+    coverageThreshold: {
+      global: {
+        branches: 80,
+        functions: 80,
+        lines: 80,
+        statements: 80,
+      },
+    },
 
     // NOTE: paths are ABSOLUTE, unless they begin with a globstar (**)
     testMatch: [
