@@ -6,6 +6,9 @@
   "scripts": {
     "build": "webpack",
     "build:dev": "NODE_ENV=development webpack",
+    "ci:build": "npm run build",
+    "ci:lint": "npm run fmt:check && npm run lint",
+    "ci:test": "npm run test:coverage",
     "fmt": "prettier --write \"{*,src/**/*,tools/**/*}.+(js|mjs|jsx|css|yml|json)\"",
     "fmt:check": "prettier --check \"{*,src/**/*,tools/**/*}.+(js|mjs|jsx|css|yml|json)\"",
     "lint": "eslint \"{*,src/**/*,tools/**/*}.+(js|mjs|jsx)\"",
