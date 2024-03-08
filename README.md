@@ -1,4 +1,6 @@
-# React App Template [![CI](https://github.com/stefcameron/react-app-template/workflows/CI/badge.svg?branch=master&event=push)](https://github.com/stefcameron/react-app-template/actions?query=workflow:CI+branch:master) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
+[![CI](https://github.com/stefcameron/react-app-template/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/stefcameron/react-app-template/actions/workflows/ci.yml) [![license](https://badgen.now.sh/badge/license/MIT)](./LICENSE)
+
+# React App Template
 
 My own "create react app" with a stack that I find works well, is easy to
 understand, and doesn't need to be ejected in order to get into its guts
