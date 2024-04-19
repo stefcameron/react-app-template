@@ -1,0 +1,19 @@
+.helloworld {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  margin-top: 16px;
+}
+
+.helloworld > button {
+  width: 100px;
+}
+
+.helloworld > p {
+  color: darkslategray;
+  font-style: italic;
+  font-size: 0.85rem;
+}

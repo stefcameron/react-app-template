@@ -29,11 +29,13 @@ jobs:
       - name: Install packages
         run: npm ci
 
-      - name: Lint
-        run: npm run ci:lint
-
+      # build first because this may produce .d.ts files that `tsc` will need when
+      #  linting types in the `lint` step
       - name: Build
         run: npm run ci:build
+
+      - name: Lint
+        run: npm run ci:lint
 
       - name: Test
         run: npm run ci:test

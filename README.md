@@ -7,6 +7,8 @@ understand, and doesn't need to be ejected in order to get into its guts
 and figure out why it isn't working if something comes up.
 
 - Framework: [React](https://react.dev/)
+- Typings: [TypeScript](https://www.typescriptlang.org/)
+  - _OPTIONAL_: The template includes examples with/out typings.
 - Styling: Pure CSS styles
   - Simply import your `.css` files into modules that use them.
   - Use the `classnames` package (`import classnames from 'classnames'`) to combine classes.
@@ -51,7 +53,7 @@ $ npm test
 $ npm run test:unit
 # runs unit tests only
 $ npm run lint
-# runs ESLint
+# full format check (style, lint, typings)
 $ npm run fmt:check
 # runs Prettier in verification mode only
 ```

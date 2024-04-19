@@ -23,6 +23,7 @@ const mkConfig = function () {
     },
     transform: {
       '^.+\\.jsx?$': 'babel-jest',
+      '^.+\\.tsx?$': 'ts-jest',
       '.+\\.(css|styl|less|sass|scss|png|jpg|svg|ttf|woff|woff2|otf)$':
         'jest-transform-stub',
     },
@@ -39,7 +40,7 @@ const mkConfig = function () {
 
     // NOTE: paths are relative from where Jest is run
     collectCoverageFrom: [
-      'src/**/[^.]*.{js,jsx}', // ignore .files like .eslintrc.js with `/[^.]` in this glob pattern
+      'src/**/[^.]*.{js,jsx,ts,tsx}', // ignore .files like .eslintrc.js with `/[^.]` in this glob pattern
     ],
     coverageDirectory: './coverage',
     coverageThreshold: {
@@ -53,12 +54,12 @@ const mkConfig = function () {
 
     // NOTE: paths are ABSOLUTE, unless they begin with a globstar (**)
     testMatch: [
-      // match any file with a suffix of .test, or .spec; and with .js or .jsx
-      //  extension; and just test.<ext> or spec.<ext>; as long as the file is inside
+      // match any file with a suffix of .test, or .spec; and with .jsx? or .tsx?
+      //  extensions; and just test.<ext> or spec.<ext>; as long as the file is inside
       //  a __test__ directory at any depth within the base path
       `${path.resolve(
         __dirname
-      )}/src/**/__tests__/**/?(*.)+(spec|test).{js,jsx}`,
+      )}/src/**/__tests__/**/?(*.)+(spec|test).{js,jsx,ts,tsx}`,
     ],
 
     // NOTE: to truly ignore paths, we have to ignore them both for tests and
@@ -80,7 +81,11 @@ const mkConfig = function () {
       path.resolve(__dirname, './tools/tests'),
     ],
 
-    setupFilesAfterEnv: [path.resolve(__dirname, './tools/tests/jestSetup.js')],
+    moduleNameMapper: {
+      '^testingUtility$': '<rootDir>/tools/tests/testingUtility.ts',
+    },
+
+    setupFilesAfterEnv: ['<rootDir>/tools/tests/jestSetup.js'],
     snapshotFormat: {
       escapeString: true,
       printBasicPrototype: true,

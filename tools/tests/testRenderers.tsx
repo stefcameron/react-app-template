@@ -4,11 +4,16 @@
 
 /* eslint-env browser -- this code is executed in the context of JSDom */
 
+import { ReactNode } from 'react';
 import propTypes from 'prop-types';
-import { render } from '@testing-library/react';
+import { RenderOptions, RenderResult, render } from '@testing-library/react';
+
+export interface TestRenderer {
+  (ui: ReactNode, options?: RenderOptions): RenderResult;
+}
 
 // Providers needed to render the App
-const AppProviders = function ({ children }) {
+const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   // wrap `children` into any necessary providers
   return <>{children}</>;
 };
@@ -21,10 +26,16 @@ AppProviders.propTypes = {
 };
 
 // normal render without a custom wrapper
-export const renderRaw = (ui, options) => render(ui, options);
+export const renderRaw: TestRenderer = (
+  ui: ReactNode,
+  options?: RenderOptions
+) => render(ui, options);
 
 // App render with all its required providers
-export const renderApp = (ui, options) =>
+export const renderApp: TestRenderer = (
+  ui: ReactNode,
+  options?: RenderOptions
+) =>
   renderRaw(ui, {
     wrapper: AppProviders,
     ...options,

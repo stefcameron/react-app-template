@@ -113,6 +113,17 @@ const mkConfig = function () {
       ignored: ['node_modules/**', 'dist/**', '**/*.spec.js', '**/*.test.js'],
     },
 
+    resolve: {
+      // add `.ts` and `.tsx` as a resolvable extensions
+      extensions: ['.ts', '.tsx', '.js'],
+      // add support for TypeScript's fully-qualified ESM imports
+      extensionAlias: {
+        '.js': ['.js', '.ts'],
+        '.cjs': ['.cjs', '.cts'],
+        '.mjs': ['.mjs', '.mts'],
+      },
+    },
+
     optimization: {
       // generate vendor chunks to keep the main chunk leaner for easier build debugging
       splitChunks: {
@@ -137,6 +148,17 @@ const mkConfig = function () {
             // NOTE: babel.config.js won't get loaded automatically by the loader because it's
             //  a JS file; the loader only auto-loads babelrc (JSON-based) files
             options: loadBabelConfig(),
+          },
+        },
+
+        {
+          // NOTE: allow /node_modules/ because anything TS that we need must be transpiled
+          test: /\.([cm]?ts|tsx)$/,
+          use: {
+            loader: 'ts-loader',
+            options: {
+              configFile: path.resolve(__dirname, './tsconfig.json'),
+            },
           },
         },
 

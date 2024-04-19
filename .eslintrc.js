@@ -13,6 +13,18 @@ const parserOptions = {
   sourceType: 'module', // ESM
 };
 
+// for use with https://typescript-eslint.io/users/configs#projects-with-type-checking
+// @see https://typescript-eslint.io/getting-started/typed-linting
+const typedParserOptions = {
+  ...parserOptions,
+  ecmaFeatures: {
+    ...parserOptions.ecmaFeatures,
+    jsx: false,
+  },
+  project: true,
+  tsconfigRootDir: __dirname,
+};
+
 // @see https://eslint.org/docs/latest/use/configure/language-options#specifying-environments
 const env = {
   es2024: true, // automatically sets `parserOptions.ecmaVersion` parser option to 15
@@ -33,25 +45,88 @@ const jestEnv = {
 // for all JavaScript files
 const jsExtends = [
   'eslint:recommended',
-  'prettier', // ALWAYS AFTER ESLINT: disable style rules that conflict with prettier
+
+  // @see https://typescript-eslint.io/troubleshooting/formatting#suggested-usage---prettier
+  'prettier', // ALWAYS LAST: disable style rules that conflict with prettier
+];
+
+// for all TypeScript files
+const typedExtends = [
+  'eslint:recommended',
+
+  // @see https://typescript-eslint.io/users/configs#projects-with-type-checking
+  'plugin:@typescript-eslint/recommended-type-checked',
+
+  // @see https://typescript-eslint.io/troubleshooting/formatting#suggested-usage---prettier
+  'prettier', // ALWAYS LAST: disable style rules that conflict with prettier
 ];
 
 // for JS files with React/JSX code
 const reactExtends = [
-  ...jsExtends,
+  'eslint:recommended',
+
   'plugin:react/recommended',
   'plugin:react-hooks/recommended',
-
   // from eslint-plugin-react; disables rules no longer applicable when using React 17's
   //  new JSX Transform (react/jsx-uses-react, react/react-in-jsx-scope)
   'plugin:react/jsx-runtime',
+
+  // @see https://typescript-eslint.io/troubleshooting/formatting#suggested-usage---prettier
+  'prettier', // ALWAYS LAST: disable style rules that conflict with prettier
 ];
 
-// for test modules run by Jest and in which RTL is used
+// for TypeScript files with React/JSX code
+const typedReactExtends = [
+  'eslint:recommended',
+
+  // @see https://typescript-eslint.io/users/configs#projects-with-type-checking
+  'plugin:@typescript-eslint/recommended-type-checked',
+
+  'plugin:react/recommended',
+  'plugin:react-hooks/recommended',
+  // from eslint-plugin-react; disables rules no longer applicable when using React 17's
+  //  new JSX Transform (react/jsx-uses-react, react/react-in-jsx-scope)
+  'plugin:react/jsx-runtime',
+
+  // @see https://typescript-eslint.io/troubleshooting/formatting#suggested-usage---prettier
+  'prettier', // ALWAYS LAST: disable style rules that conflict with prettier
+];
+
+// for JS test modules run by Jest and in which RTL is used
 const jestExtends = [
-  ...reactExtends,
+  'eslint:recommended',
+
+  'plugin:react/recommended',
+  'plugin:react-hooks/recommended',
+  // from eslint-plugin-react; disables rules no longer applicable when using React 17's
+  //  new JSX Transform (react/jsx-uses-react, react/react-in-jsx-scope)
+  'plugin:react/jsx-runtime',
+
   'plugin:jest-dom/recommended',
   'plugin:testing-library/react',
+
+  // @see https://typescript-eslint.io/troubleshooting/formatting#suggested-usage---prettier
+  'prettier', // ALWAYS LAST: disable style rules that conflict with prettier
+];
+
+// for TypeScript test modules run by Jest and in which RTL is used
+const typedJestExtends = [
+  'eslint:recommended',
+
+  // @see https://typescript-eslint.io/users/configs#projects-with-type-checking
+  'plugin:@typescript-eslint/recommended-type-checked',
+
+  'plugin:react/recommended',
+  'plugin:react-hooks/recommended',
+  // from eslint-plugin-react; disables rules no longer applicable when using React 17's
+  //  new JSX Transform (react/jsx-uses-react, react/react-in-jsx-scope)
+  'plugin:react/jsx-runtime',
+
+  'plugin:jest-dom/recommended',
+  'plugin:testing-library/react',
+
+  // @see https://typescript-eslint.io/troubleshooting/formatting#suggested-usage---prettier
+  'prettier', // ALWAYS LAST: disable style rules that conflict with prettier
 ];
 
 // for all JS files
@@ -140,10 +215,11 @@ const jsRules = {
   'prefer-const': 'error',
 };
 
+// for TypeScript modules
+const tsRules = {};
+
 // for modules with React/JSX code
 const reactRules = {
-  ...jsRules,
-
   //// React Plugin
 
   // not needed because we don't pre-compile React code, it just runs in the browser
@@ -162,8 +238,6 @@ const reactRules = {
 
 // for test modules run by Jest in which RTL is used
 const jestRules = {
-  ...reactRules,
-
   //// jest plugin
 
   'jest/no-disabled-tests': 'error',
@@ -218,8 +292,9 @@ module.exports = {
   overrides: [
     // project JavaScript files (tooling, etc.)
     {
+      // traditional CJS/require scripts
       files: ['**/*.js'],
-      excludedFiles: ['src/**/*.*'],
+      excludedFiles: ['src/**/*.*', 'tools/tests/**/*.*'],
       extends: jsExtends,
       parserOptions: {
         ...parserOptions,
@@ -232,8 +307,9 @@ module.exports = {
       },
     },
     {
+      // modern ESM/import scripts
       files: ['**/*.mjs'],
-      excludedFiles: ['src/**/*.*'],
+      excludedFiles: ['src/**/*.*', 'tools/tests/**/*.*'],
       extends: jsExtends,
       parserOptions,
       env,
@@ -242,8 +318,22 @@ module.exports = {
         'no-console': 'off',
       },
     },
+    {
+      // TypeScript
+      files: ['**/*.m?ts'],
+      excludedFiles: ['src/**/*.*', 'tools/tests/**/*.*'],
+      extends: typedExtends,
+      parser: '@typescript-eslint/parser',
+      parserOptions: typedParserOptions,
+      env,
+      rules: {
+        ...jsRules,
+        ...tsRules,
+        'no-console': 'off',
+      },
+    },
 
-    // source files
+    // JavaScript source files
     {
       files: ['src/**/*.{js,jsx}'],
 
@@ -261,18 +351,63 @@ module.exports = {
         },
       },
       env: browserEnv,
-      rules: reactRules,
+      rules: {
+        ...jsRules,
+        ...reactRules,
+      },
       settings: reactSettings,
     },
 
-    // test files
+    // TypeScript source files (plain TS and React-based TSX)
+    {
+      files: ['src/**/*.ts'],
+
+      // @see https://www.npmjs.com/package/@babel/eslint-plugin
+      //  currently, none of the rules overridden in the plugin are enforced here
+      plugins: ['@babel'],
+
+      extends: typedExtends,
+      parser: '@typescript-eslint/parser',
+      parserOptions: typedParserOptions,
+      env: browserEnv,
+      rules: {
+        ...jsRules,
+        ...tsRules,
+      },
+    },
+    {
+      files: ['src/**/*.tsx'],
+
+      // @see https://www.npmjs.com/package/@babel/eslint-plugin
+      //  currently, none of the rules overridden in the plugin are enforced here
+      plugins: ['@babel'],
+
+      extends: typedReactExtends,
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ...typedParserOptions,
+        ecmaFeatures: {
+          ...typedParserOptions.ecmaFeatures,
+          jsx: true,
+        },
+      },
+      env: browserEnv,
+      rules: {
+        ...jsRules,
+        ...tsRules,
+        ...reactRules,
+      },
+      settings: reactSettings,
+    },
+
+    // JavaScript test files
     {
       // match any file with a suffix of .test, or .spec; and with .js or .jsx
       //  extension; and just test.<ext> or spec.<ext>; as long as the file is inside
       //  a __test__ directory at any depth within the base path
       files: [
         'src/**/__tests__/**/?(*.)+(spec|test).{js,jsx}',
-        'tools/tests/**/*.js',
+        'tools/tests/**/*.{js,jsx}',
       ],
 
       // @see https://www.npmjs.com/package/@babel/eslint-plugin
@@ -289,7 +424,44 @@ module.exports = {
         },
       },
       env: jestEnv,
-      rules: jestRules,
+      rules: {
+        ...jsRules,
+        ...reactRules,
+        ...jestRules,
+      },
+      settings: jestSettings,
+    },
+
+    // TypeScript test files
+    {
+      // match any file with a suffix of .test, or .spec; and with .ts or .tsx
+      //  extension; and just test.<ext> or spec.<ext>; as long as the file is inside
+      //  a __test__ directory at any depth within the base path
+      files: [
+        'src/**/__tests__/**/?(*.)+(spec|test).{ts,tsx}',
+        'tools/tests/**/*.{ts,tsx}',
+      ],
+
+      // @see https://www.npmjs.com/package/@babel/eslint-plugin
+      //  currently, none of the rules overridden in the plugin are enforced here
+      plugins: ['@babel', 'jest'],
+
+      extends: typedJestExtends,
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ...typedParserOptions,
+        ecmaFeatures: {
+          ...typedParserOptions.ecmaFeatures,
+          jsx: true,
+        },
+      },
+      env: jestEnv,
+      rules: {
+        ...jsRules,
+        ...tsRules,
+        ...reactRules,
+        ...jestRules,
+      },
       settings: jestSettings,
     },
   ],
