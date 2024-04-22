@@ -207,6 +207,14 @@ const mkConfig = function () {
       port,
       open: getOpenConfig(),
       historyApiFallback: true,
+      client: {
+        // show full screen overlay in browser on compile error(s)
+        overlay: {
+          warnings: false,
+          errors: true,
+          runtimeErrors: false,
+        },
+      },
     },
   };
 };
