@@ -11,6 +11,8 @@
   --app-font-weight-normal: 400;
   --app-font-weight-semibold: 600;
   --app-font-weight-bold: 700;
+
+  font-size: 16px; /* establish `rem` unit basis */
 }
 
 * {
@@ -28,31 +30,41 @@ body {
 h1 {
   cursor: default;
   font-weight: var(--app-font-weight-semibold);
+  font-size: 2rem;
 }
 
 h2 {
   cursor: default;
   font-weight: var(--app-font-weight-semibold);
+  font-size: 1.8rem;
 }
 
 h3 {
   cursor: default;
   font-weight: var(--app-font-weight-semibold);
+  font-size: 1.6rem;
 }
 
 h4 {
   cursor: default;
   font-weight: var(--app-font-weight-semibold);
+  font-size: 1.4rem;
 }
 
 h5,
 h6 {
   cursor: default;
+  font-weight: var(--app-font-weight-semibold);
+  font-size: 1.2rem;
+  color: #555;
+}
+h6 {
   font-style: italic;
 }
 
 p {
   cursor: default;
+  font-size: 1rem;
 }
 
 a[href],
@@ -78,6 +90,10 @@ pre,
 code {
   cursor: default;
   font-family: var(--app-font-family-monospace);
+  font-size: 0.9rem;
+}
+pre {
+  white-space: preserve nowrap;
 }
 
 strong {

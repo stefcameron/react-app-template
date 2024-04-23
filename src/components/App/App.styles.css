@@ -4,14 +4,11 @@
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 25vh;
 }
 
-.app > h1 {
-  color: lightslategray;
+.app > section {
+  margin-bottom: 24px;
 }
-
-.app > h2 {
-  color: lightblue;
-  font-family: var(--app-font-family-monospace);
+.app > section:last-child {
+  margin-bottom: 0;
 }
