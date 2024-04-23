@@ -5,14 +5,23 @@
    * FONTS
    */
 
-  --app-font-family-default: 'Open Sans', sans-serif;
-  --app-font-family-monospace: monospace;
+  --theme-font-family-default: 'Open Sans', sans-serif;
+  --theme-font-family-monospace: monospace;
 
-  --app-font-weight-normal: 400;
-  --app-font-weight-semibold: 600;
-  --app-font-weight-bold: 700;
+  --theme-font-weight-normal: 400;
+  --theme-font-weight-semibold: 600;
+  --theme-font-weight-bold: 700;
 
-  font-size: 16px; /* establish `rem` unit basis */
+  --theme-font-size-h1: 2.6rem;
+  --theme-font-size-h2: 2rem;
+  --theme-font-size-h3: 1.7rem;
+  --theme-font-size-h4: 1.4rem;
+  --theme-font-size-h5: 1.2rem;
+  --theme-font-size-h6: 1.2rem;
+  --theme-font-size-text: 1rem;
+  --theme-font-size-mono: 0.925rem;
+
+  font-size: 14px; /* establish `rem` unit basis */
 }
 
 * {
@@ -22,49 +31,52 @@
 }
 
 body {
-  font-family: var(--app-font-family-default);
+  font-family: var(--theme-font-family-default);
   background-color: white;
   color: #121212;
 }
 
 h1 {
   cursor: default;
-  font-weight: var(--app-font-weight-semibold);
-  font-size: 2rem;
+  font-weight: var(--theme-font-weight-semibold);
+  font-size: var(--theme-font-size-h1);
 }
 
 h2 {
   cursor: default;
-  font-weight: var(--app-font-weight-semibold);
-  font-size: 1.8rem;
+  font-weight: var(--theme-font-weight-semibold);
+  font-size: var(--theme-font-size-h2);
 }
 
 h3 {
   cursor: default;
-  font-weight: var(--app-font-weight-semibold);
-  font-size: 1.6rem;
+  font-weight: var(--theme-font-weight-semibold);
+  font-size: var(--theme-font-size-h3);
 }
 
 h4 {
   cursor: default;
-  font-weight: var(--app-font-weight-semibold);
-  font-size: 1.4rem;
+  font-weight: var(--theme-font-weight-semibold);
+  font-size: var(--theme-font-size-h4);
 }
 
 h5,
 h6 {
   cursor: default;
-  font-weight: var(--app-font-weight-semibold);
-  font-size: 1.2rem;
+  font-weight: var(--theme-font-weight-semibold);
   color: #555;
 }
+h5 {
+  font-size: var(--theme-font-size-h5);
+}
 h6 {
+  font-size: var(--theme-font-size-h6);
   font-style: italic;
 }
 
 p {
   cursor: default;
-  font-size: 1rem;
+  font-size: var(--theme-font-size-text);
 }
 
 a[href],
@@ -75,7 +87,8 @@ a[href]:active,
 a[href]:active:hover,
 a[href]:visited,
 a[href]:visited:hover {
-  font-weight: var(--app-font-weight-semibold);
+  font-weight: var(--theme-font-weight-semibold);
+  font-size: inherit;
   color: blue;
   text-decoration: none;
 }
@@ -89,13 +102,13 @@ a[href]:visited:hover {
 pre,
 code {
   cursor: default;
-  font-family: var(--app-font-family-monospace);
-  font-size: 0.9rem;
+  font-family: var(--theme-font-family-monospace);
+  font-size: var(--theme-font-size-mono);
 }
 pre {
   white-space: preserve nowrap;
 }
 
 strong {
-  font-weight: var(--app-font-weight-bold);
+  font-weight: var(--theme-font-weight-bold);
 }
