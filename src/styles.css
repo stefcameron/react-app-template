@@ -55,6 +55,25 @@ p {
   cursor: default;
 }
 
+a[href],
+a[href]:hover,
+a[href]:link,
+a[href]:link:hover,
+a[href]:active,
+a[href]:active:hover,
+a[href]:visited,
+a[href]:visited:hover {
+  font-weight: var(--app-font-weight-semibold);
+  color: blue;
+  text-decoration: none;
+}
+a[href]:hover,
+a[href]:link:hover,
+a[href]:active:hover,
+a[href]:visited:hover {
+  cursor: pointer;
+}
+
 pre,
 code {
   cursor: default;
