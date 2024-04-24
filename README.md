@@ -60,7 +60,6 @@ $ npm run fmt:check
 
 ## Styles
 
-Pure CSS, just `import './MyComponent.styles.css'` in your component's module
-the styles will get loaded whenever/if ever the module is loaded at runtime.
+Pure CSS: Just `import './MyComponent.css'` in your component's module. The styles will get loaded when/if ever the module is loaded at runtime.
 
 See `./src/components/App/App.js` for an example.

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './HelloWorld.styles.css';
+import './HelloWorld.css';
 
 export const HelloWorld = (): JSX.Element => {
   const [visible, setVisible] = useState(false);
