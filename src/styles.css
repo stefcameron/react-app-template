@@ -19,6 +19,7 @@
   --theme-font-size-h5: 1.2rem;
   --theme-font-size-h6: 1.2rem;
   --theme-font-size-text: 1rem;
+  --theme-font-size-small: 0.85rem;
   --theme-font-size-mono: 0.925rem;
 
   font-size: 14px; /* establish `rem` unit basis */
@@ -79,6 +80,10 @@ p {
   font-size: var(--theme-font-size-text);
 }
 
+small {
+  font-size: var(--theme-font-size-small);
+}
+
 a[href],
 a[href]:hover,
 a[href]:link,
@@ -107,6 +112,9 @@ code {
 }
 pre {
   white-space: preserve nowrap;
+}
+small code {
+  font-size: var(--theme-font-size-small);
 }
 
 strong {

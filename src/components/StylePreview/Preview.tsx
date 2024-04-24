@@ -11,6 +11,10 @@ export const StylePreview = (): JSX.Element => {
         Paragraph text with <strong>strong</strong>, <em>italic</em>,{' '}
         <code>code</code>, <a href="#">link</a>.
       </p>
+      <small>
+        Paragraph text with <strong>strong</strong>, <em>italic</em>,{' '}
+        <code>code</code>, <a href="#">link</a>.
+      </small>
       <pre>
         Preformatted text block{'\n'}
         with newline.
