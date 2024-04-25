@@ -4,14 +4,7 @@
     "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
-    "types": [
-      "node",
-      "jest",
-      "jest-axe",
-      "react",
-      "react-dom",
-      "@testing-library/jest-dom"
-    ],
+    "typeRoots": ["./node_modules/@types", "tools/tests/globals.d.ts"],
     "moduleResolution": "Bundler",
     "strict": true,
     "sourceMap": true,
