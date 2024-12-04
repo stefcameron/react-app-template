@@ -15,6 +15,7 @@ import { createRequire } from 'module';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { cloneDeep } from 'lodash-es';
+import webpack from 'webpack';
 
 //
 // Variables and Constants
@@ -22,6 +23,7 @@ import { cloneDeep } from 'lodash-es';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
+const { DefinePlugin } = webpack;
 
 //
 // Functions
@@ -183,6 +185,9 @@ const mkConfig = function () {
     //  loaders that are executed in REVERSE order)
     //  @see https://stackoverflow.com/questions/41470771/webpack-does-the-order-of-plugins-matter
     plugins: [
+      new DefinePlugin({
+        WP_BUILD_ENV: JSON.stringify(isDevBuild ? 'development' : 'production'),
+      }),
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         template: indexPath,

@@ -19,7 +19,9 @@ const mkConfig = function () {
 
     testEnvironment: 'jsdom', // requires separate 'jest-environment-jsdom' package
     globals: {
-      // none for now
+      // NOTE: these must also be defined in <repo>/src/globals.d.ts (referenced in
+      //  <repo>/tsconfig.json) and in <repo>/.eslintrc.js's `srcGlobals` object
+      WP_BUILD_ENV: 'development',
     },
     transform: {
       '^.+\\.jsx?$': 'babel-jest',

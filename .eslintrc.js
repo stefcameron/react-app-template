@@ -42,6 +42,12 @@ const jestEnv = {
   'jest/globals': true,
 };
 
+// NOTE: these must also be defined in <repo>/src/globals.d.ts referenced in the
+//  <repo>/tsconfig.json as well as the `globals` property in <repo>/jest.config.mjs
+const srcGlobals = {
+  WP_BUILD_ENV: 'readonly',
+};
+
 // for all JavaScript files
 const jsExtends = [
   'eslint:recommended',
@@ -290,6 +296,10 @@ const jestSettings = {
 module.exports = {
   root: true,
   overrides: [
+    //
+    // TOOLING SCRIPTS
+    //
+
     // project JavaScript files (tooling, etc.)
     {
       // traditional CJS/require scripts
@@ -333,6 +343,10 @@ module.exports = {
       },
     },
 
+    //
+    // SOURCE FILES
+    //
+
     // JavaScript source files
     {
       files: ['src/**/*.{js,jsx}'],
@@ -351,6 +365,7 @@ module.exports = {
         },
       },
       env: browserEnv,
+      globals: srcGlobals,
       rules: {
         ...jsRules,
         ...reactRules,
@@ -370,6 +385,7 @@ module.exports = {
       parser: '@typescript-eslint/parser',
       parserOptions: typedParserOptions,
       env: browserEnv,
+      globals: srcGlobals,
       rules: {
         ...jsRules,
         ...tsRules,
@@ -392,6 +408,7 @@ module.exports = {
         },
       },
       env: browserEnv,
+      globals: srcGlobals,
       rules: {
         ...jsRules,
         ...tsRules,
@@ -424,6 +441,7 @@ module.exports = {
         },
       },
       env: jestEnv,
+      globals: srcGlobals,
       rules: {
         ...jsRules,
         ...reactRules,
@@ -456,6 +474,7 @@ module.exports = {
         },
       },
       env: jestEnv,
+      globals: srcGlobals,
       rules: {
         ...jsRules,
         ...tsRules,
