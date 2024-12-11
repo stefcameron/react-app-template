@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import './HelloWorld.css';
 
-export const HelloWorld = (): JSX.Element => {
+export const HelloWorld = (): ReactElement => {
   const [visible, setVisible] = useState(false);
 
   const handleClick = () => {

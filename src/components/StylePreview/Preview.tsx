@@ -1,4 +1,6 @@
-export const StylePreview = (): JSX.Element => {
+import { ReactElement } from 'react';
+
+export const StylePreview = (): ReactElement => {
   return (
     <section>
       <h1>Header 1</h1>
