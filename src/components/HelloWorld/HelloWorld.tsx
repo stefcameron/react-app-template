@@ -1,8 +1,12 @@
-import { ReactElement, useState } from 'react';
+import { FC, PropsWithChildren, useState } from 'react';
 import './HelloWorld.css';
 
-export const HelloWorld = (): ReactElement => {
-  const [visible, setVisible] = useState(false);
+interface Props extends PropsWithChildren {
+  message?: string;
+}
+
+export const HelloWorld: FC<Props> = ({ message, children }) => {
+  const [visible, setVisible] = useState(true);
 
   const handleClick = () => {
     setVisible(!visible);
@@ -11,10 +15,10 @@ export const HelloWorld = (): ReactElement => {
   return (
     <div className="helloworld">
       <button onClick={handleClick}>Say {visible ? 'goodbye' : 'hello'}</button>
-      {visible ? <p>Hello, world!</p> : null}
-      {WP_BUILD_ENV === 'development'
-        ? '{Dev build}'
-        : /* istanbul ignore next: cannot be tested */ '{Prod build}'}
+      {visible ? (
+        <p className="helloworld__message">{message || 'Nothing to say...'}</p>
+      ) : null}
+      {children}
     </div>
   );
 };

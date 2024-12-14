@@ -15,11 +15,19 @@ describe('/components/HelloWorld', () => {
   });
 
   it('can say hello', async () => {
-    render(<HelloWorld />);
-    await act(async () => await user.click(screen.getByRole('button')));
-    expect(screen.getByText('Hello, world!')).toBeInTheDocument();
+    const message = 'Hello, world!';
+    render(<HelloWorld message={message} />);
+
+    expect(screen.getByText(message)).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: 'Say goodbye' })
+    ).toBeInTheDocument();
+
+    await act(async () => await user.click(screen.getByRole('button')));
+
+    expect(screen.queryByText(message)).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Say hello' })
     ).toBeInTheDocument();
   });
 

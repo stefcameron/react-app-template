@@ -9,7 +9,13 @@ export const App = () => {
       <meta name="keywords" content="react, template, typescript, javascript" />
       <section>
         <p>React App Template</p>
-        <HelloWorld />
+        <HelloWorld message="Hello, world!">
+          <p>
+            {WP_BUILD_ENV === 'development'
+              ? '{Dev build}'
+              : /* istanbul ignore next: cannot be tested */ '{Prod build}'}
+          </p>
+        </HelloWorld>
       </section>
       <StylePreview />
     </div>

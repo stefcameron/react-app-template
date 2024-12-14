@@ -1,6 +1,6 @@
-import { ReactElement } from 'react';
+import { FC } from 'react';
 
-export const StylePreview = (): ReactElement => {
+export const StylePreview: FC = () => {
   return (
     <section>
       <h1>Header 1</h1>
