@@ -24,6 +24,16 @@ and figure out why it isn't working if something comes up.
 - Formatting: [Prettier](https://prettier.io/)
 - Bundling: [Webpack](https://webpack.js.org/)
 
+## Usage
+
+1. Clone this repo.
+2. Run `npm run eject -- DEST_DIR` to copy this project (less ignored paths in `./.gitignore`) into a new directory.
+3. In this new directory:
+    - Git already initialized
+    - Dependencies already installed
+    - Update the `name`, `version`, `description`, `author`, `license`, and other fields in `package.json`
+    - Run with `npm start`
+
 ## Running
 
 Using the latest stable version of Node (v20) and NPM (v9.6)...

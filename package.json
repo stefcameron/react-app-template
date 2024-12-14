@@ -12,6 +12,7 @@
     "ci:build": "npm run build",
     "ci:lint": "npm run fmt:check && npm run lint",
     "ci:test": "npm run test:coverage",
+    "eject": "node ./tools/eject.mjs",
     "fmt": "prettier --write \"{*,src/**/*,tools/**/*}.+(js|mjs|jsx|ts|mts|tsx|css|yml|json)\"",
     "fmt:check": "prettier --check \"{*,src/**/*,tools/**/*}.+(js|mjs|jsx|ts|mts|tsx|css|yml|json)\"",
     "lint": "npm run lint:code && npm run lint:types && npm run fmt:check",
