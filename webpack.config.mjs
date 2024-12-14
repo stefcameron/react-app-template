@@ -67,7 +67,7 @@ const loadBabelConfig = function () {
   // NOTE: clone because `require()` caches after the first read/load, and we want
   //  to make sure we always return a brand new object to avoid inadvertent
   //  overwrites from one build config to the next
-  const config = cloneDeep(require(filepath)); // eslint-disable-line global-require
+  const config = cloneDeep(require(filepath));
 
   // check for env overrides
   const babelEnv = process.env.BABEL_ENV || 'build';
