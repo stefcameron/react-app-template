@@ -13,7 +13,6 @@ import { renderApp } from './testRenderers';
 //
 
 // re-export everything
-// eslint-disable-next-line no-duplicate-imports
 export * from '@testing-library/react';
 
 // override @testing-library/react's render() method exported above
