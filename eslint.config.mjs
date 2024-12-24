@@ -181,6 +181,13 @@ const reactRules = {
   'react-hooks/exhaustive-deps': 'error',
 };
 
+// TypeScript-specific rules
+const typescriptRules = {
+  ...typescript.configs['recommended-type-checked'].rules,
+
+  // add overrides here as needed
+};
+
 // Jest-specific rules
 const jestRules = {
   //// jest plugin
@@ -249,9 +256,7 @@ const createToolingConfig = (isModule = true, isTypescript = false) => ({
   },
   rules: {
     ...baseRules,
-    ...(isModule && isTypescript
-      ? typescript.configs['recommended-type-checked'].rules
-      : {}),
+    ...(isModule && isTypescript ? typescriptRules : {}),
     'no-console': 'off',
   },
 });
@@ -314,7 +319,7 @@ const createSourceTSConfig = (isReact = false) => ({
   settings: isReact ? reactSettings : {},
   rules: {
     ...baseRules,
-    ...typescript.configs['recommended-type-checked'].rules,
+    ...typescriptRules,
     ...(isReact ? reactRules : {}),
   },
 });
@@ -357,11 +362,9 @@ const createTestConfig = (isTypescript = false) => ({
   settings: reactSettings,
   rules: {
     ...baseRules,
+    ...(isTypescript ? typescriptRules : {}),
     ...reactRules,
     ...jestRules,
-    ...(isTypescript
-      ? typescript.configs['recommended-type-checked'].rules
-      : {}),
   },
 });
 
