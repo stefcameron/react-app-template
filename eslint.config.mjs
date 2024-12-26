@@ -18,7 +18,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import testingLibrary from 'eslint-plugin-testing-library';
 
 //
-// Base parser options and environments
+// Parser options and environments
 //
 
 const languageOptions = {
@@ -58,11 +58,20 @@ const typedParserOptions = {
 };
 
 //
+// Plugins
+//
+
+const basePlugins = {
+  '@babel': babel, // @see https://www.npmjs.com/package/@babel/eslint-plugin
+};
+
+//
 // Globals
 //
 
 const baseGlobals = {
-  ...globals.es2025,
+  // anything in addition to what `languageOptions.ecmaVersion` provides
+  // @see https://eslint.org/docs/latest/use/configure/language-options#predefined-global-variables
 };
 
 const toolingGlobals = {
@@ -261,6 +270,7 @@ const reactSettings = {
 const createToolingConfig = (isModule = true, isTypescript = false) => ({
   files: isModule ? (isTypescript ? ['**/*.m?ts'] : ['**/*.mjs']) : ['**/*.js'],
   ignores: ['src/**/*.*', 'tools/tests/**/*.*'],
+  plugins: basePlugins,
   languageOptions: {
     ...languageOptions,
     parser: isTypescript ? typescriptParser : babelParser,
@@ -287,7 +297,7 @@ const createToolingConfig = (isModule = true, isTypescript = false) => ({
 const createSourceJSConfig = (isReact = false) => ({
   files: isReact ? ['src/**/*.{js,jsx}'] : ['src/**/*.js'],
   plugins: {
-    '@babel': babel, // @see https://www.npmjs.com/package/@babel/eslint-plugin
+    ...basePlugins,
     ...(isReact ? { react, 'react-hooks': reactHooks } : {}),
   },
   languageOptions: {
@@ -315,7 +325,7 @@ const createSourceJSConfig = (isReact = false) => ({
 const createSourceTSConfig = (isReact = false) => ({
   files: isReact ? ['src/**/*.tsx'] : ['src/**/*.ts'],
   plugins: {
-    '@babel': babel, // @see https://www.npmjs.com/package/@babel/eslint-plugin
+    ...basePlugins,
     '@typescript-eslint': typescript,
     ...(isReact ? { react, 'react-hooks': reactHooks } : {}),
   },
@@ -355,7 +365,7 @@ const createTestConfig = (isTypescript = false) => ({
         'tools/tests/**/*.{js,jsx}',
       ],
   plugins: {
-    '@babel': babel, // @see https://www.npmjs.com/package/@babel/eslint-plugin
+    ...basePlugins,
     jest,
     'jest-dom': jestDom,
     'testing-library': testingLibrary,
