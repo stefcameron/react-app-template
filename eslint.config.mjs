@@ -21,12 +21,15 @@ import testingLibrary from 'eslint-plugin-testing-library';
 // Base parser options and environments
 //
 
+const languageOptions = {
+  ecmaVersion: 'latest',
+};
+
 // @see https://eslint.org/docs/latest/use/configure/language-options#specifying-parser-options
 const parserOptions = {
   ecmaFeatures: {
     impliedStrict: true,
   },
-  ecmaVersion: 'latest',
   sourceType: 'module',
 };
 
@@ -54,6 +57,10 @@ const typedParserOptions = {
   tsconfigRootDir: import.meta.dirname,
 };
 
+//
+// Globals
+//
+
 const baseGlobals = {
   ...globals.es2025,
 };
@@ -68,7 +75,7 @@ const browserGlobals = {
   ...globals.browser,
 };
 
-const jestGlobals = {
+const testGlobals = {
   ...browserGlobals,
   ...globals.jest,
 };
@@ -162,7 +169,10 @@ const baseRules = {
   'prefer-const': 'error',
 };
 
+//
 // React-specific rules
+//
+
 const reactRules = {
   ...react.configs.flat.recommended.rules,
   ...react.configs.flat['jsx-runtime'].rules,
@@ -181,15 +191,21 @@ const reactRules = {
   'react-hooks/exhaustive-deps': 'error',
 };
 
+//
 // TypeScript-specific rules
+//
+
 const typescriptRules = {
   ...typescript.configs['recommended-type-checked'].rules,
 
   // add overrides here as needed
 };
 
-// Jest-specific rules
-const jestRules = {
+//
+// Test-specific rules
+//
+
+const testRules = {
   //// jest plugin
 
   'jest/no-disabled-tests': 'error',
@@ -246,6 +262,8 @@ const createToolingConfig = (isModule = true, isTypescript = false) => ({
   files: isModule ? (isTypescript ? ['**/*.m?ts'] : ['**/*.mjs']) : ['**/*.js'],
   ignores: ['src/**/*.*', 'tools/tests/**/*.*'],
   languageOptions: {
+    ...languageOptions,
+    parser: isTypescript ? typescriptParser : babelParser,
     parserOptions: {
       ...(isModule && isTypescript ? typedParserOptions : parserOptions),
       sourceType: isModule ? 'module' : 'script',
@@ -273,6 +291,7 @@ const createSourceJSConfig = (isReact = false) => ({
     ...(isReact ? { react, 'react-hooks': reactHooks } : {}),
   },
   languageOptions: {
+    ...languageOptions,
     parser: babelParser,
     parserOptions: {
       ...reactParserOptions,
@@ -301,6 +320,7 @@ const createSourceTSConfig = (isReact = false) => ({
     ...(isReact ? { react, 'react-hooks': reactHooks } : {}),
   },
   languageOptions: {
+    ...languageOptions,
     parser: typescriptParser,
     parserOptions: {
       ...reactParserOptions,
@@ -344,6 +364,7 @@ const createTestConfig = (isTypescript = false) => ({
     'react-hooks': reactHooks,
   },
   languageOptions: {
+    ...languageOptions,
     parser: isTypescript ? typescriptParser : babelParser,
     parserOptions: {
       ...reactParserOptions,
@@ -355,7 +376,7 @@ const createTestConfig = (isTypescript = false) => ({
       },
     },
     globals: {
-      ...jestGlobals,
+      ...testGlobals,
       ...srcGlobals,
     },
   },
@@ -364,7 +385,7 @@ const createTestConfig = (isTypescript = false) => ({
     ...baseRules,
     ...(isTypescript ? typescriptRules : {}),
     ...reactRules,
-    ...jestRules,
+    ...testRules,
   },
 });
 
