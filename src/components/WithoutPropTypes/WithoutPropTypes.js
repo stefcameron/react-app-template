@@ -8,13 +8,14 @@ export const withoutPropTypesProps =
         // true if message should be rendered
         visible: [rtv.OPTIONAL, rtv.BOOLEAN],
       }
-    : undefined;
+    : /* istanbul ignore next -- dev build only */ undefined;
 
 export const WithoutPropTypes = (props) => {
   //
   // PROPS
   //
 
+  /* istanbul ignore next -- dev build only */
   if (WP_BUILD_ENV === 'development') {
     rtv.verify(props, withoutPropTypesProps);
   }
