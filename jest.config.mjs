@@ -35,7 +35,7 @@ const mkConfig = function () {
       //  to be transpiled via 'babel-jest' configured in the 'transform' option
       // @see https://github.com/facebook/jest/issues/9292#issuecomment-569673251
       'node_modules/(?!(' +
-        // 'first-lib' +
+        'rtvjs' +
         // '|other-lib' +
         ')/)',
     ],
