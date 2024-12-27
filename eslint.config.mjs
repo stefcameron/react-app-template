@@ -189,10 +189,10 @@ const reactRules = {
   // not needed because we don't pre-compile React code, it just runs in the browser
   'react/react-in-jsx-scope': 'off',
 
-  // referring to another component's `.propTypes` is dangerous because that
-  //  property doesn't exist in in production builds as an optimization
-  //  (this rule isn't enabled in 'plugin:react/recommended')
-  'react/forbid-foreign-prop-types': 'error',
+  // PropTypes are deprecated and will be removed in React 19
+  // @see https://react.dev/blog/2024/04/25/react-19-upgrade-guide#removed-proptypes-and-defaultprops
+  'react/forbid-foreign-prop-types': 'off',
+  'react/prop-types': 'off',
 
   //// React-Hooks Plugin
 

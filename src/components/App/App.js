@@ -1,5 +1,6 @@
 import { HelloWorld } from '../HelloWorld/HelloWorld';
-import { StylePreview } from '../StylePreview/Preview';
+import { StylePreview } from '../StylePreview/StylePreview';
+import { WithoutPropTypes } from '../WithoutPropTypes/WithoutPropTypes';
 import './App.css';
 
 export const App = () => {
@@ -17,6 +18,7 @@ export const App = () => {
           </p>
         </HelloWorld>
       </section>
+      <WithoutPropTypes visible />
       <StylePreview />
     </div>
   );

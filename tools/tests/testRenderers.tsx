@@ -5,7 +5,6 @@
 /* eslint-env browser -- this code is executed in the context of JSDom */
 
 import { ReactNode } from 'react';
-import propTypes from 'prop-types';
 import { RenderOptions, RenderResult, render } from '@testing-library/react';
 
 export interface TestRenderer {
@@ -16,13 +15,6 @@ export interface TestRenderer {
 const AppProviders = ({ children }: { children: ReactNode | ReactNode[] }) => {
   // wrap `children` into any necessary providers
   return <>{children}</>;
-};
-
-AppProviders.propTypes = {
-  children: propTypes.oneOfType([
-    propTypes.node,
-    propTypes.arrayOf(propTypes.node),
-  ]),
 };
 
 // normal render without a custom wrapper

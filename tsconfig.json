@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -18,6 +19,7 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
+    "strictNullChecks": true, // required by `exactOptionalPropertyTypes`
     "target": "ESNext", // latest version of ES supported by TypeScript version in use
     "typeRoots": [
       "./node_modules/@types",
