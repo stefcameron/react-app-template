@@ -34,7 +34,16 @@ const basePlugins = {
 const importPluginSettings = {
   'import/resolver': {
     node: {
-      extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx', '.mts'],
+      extensions: [
+        '.js',
+        '.jsx',
+        '.cts',
+        '.mjs',
+        '.ts',
+        '.tsx',
+        '.cts',
+        '.mts',
+      ],
       moduleDirectory: ['node_modules', 'src/', 'tools/'],
     },
     typescript: {
@@ -66,6 +75,10 @@ const browserGlobals = {
 // Globals for test files
 const testGlobals = {
   ...globals.jest,
+
+  // `globals.browser` defines this global but it's also part of the `testing-library`
+  //  API so needs to be overwritable to avoid ESLint's `no-redeclare` rule
+  screen: 'off',
 };
 
 // Globals for BUNDLED (Webpack, Rollup, etc) source code
@@ -160,7 +173,6 @@ const baseRules = {
 
 //
 // React-specific rules
-// Assumes the react and react-hooks plugins are installed
 //
 
 const reactRules = {
@@ -183,7 +195,6 @@ const reactRules = {
 
 //
 // TypeScript-specific rules
-// Assumes the @typescript-eslint/eslint-plugin is installed
 //
 
 const typescriptRules = {
@@ -195,8 +206,6 @@ const typescriptRules = {
 
 //
 // Test-specific rules
-// Assumes the eslint-plugin-jest, eslint-plugin-jest-dom, and eslint-plugin-testing-library
-//  plugins are installed
 //
 
 const testRules = {
@@ -213,7 +222,7 @@ const testRules = {
   // this rule is buggy, and doesn't seem to work well with the Testing Library's queries
   'jest-dom/prefer-in-document': 'off',
 
-  //// RTL plugin
+  //// testing-library plugin
 
   // this prevents expect(document.querySelector('foo')), which is useful because not
   //  all elements can be found using RTL queries (sticking to RTL queries probably
@@ -242,11 +251,16 @@ const testRules = {
  * @returns {Object} ESLint config.
  */
 const createToolingConfig = (isModule = true, isTypescript = false) => ({
-  files: isModule ? (isTypescript ? ['**/*.m?ts'] : ['**/*.mjs']) : ['**/*.js'],
+  files: isModule
+    ? isTypescript
+      ? ['**/*.{ts,mts}']
+      : ['**/*.{js,mjs}']
+    : ['**/*.{js,cjs}'],
   ignores: ['src/**/*.*', 'tools/tests/**/*.*'],
   plugins: {
     ...basePlugins,
     ...(isModule ? { import: importPlugin } : {}),
+    ...(isTypescript ? { '@typescript-eslint': typescript } : {}),
   },
   languageOptions: {
     ecmaVersion,
