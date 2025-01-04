@@ -172,6 +172,14 @@ const baseRules = {
 };
 
 //
+// Tooling-specific rules
+//
+
+const toolingRules = {
+  'no-console': 'off', // OK in repo scripts
+};
+
+//
 // React-specific rules
 //
 
@@ -288,9 +296,9 @@ const createToolingConfig = (isModule = true, isTypescript = false) => ({
   },
   rules: {
     ...baseRules,
+    ...toolingRules,
     ...(isModule ? importPlugin.flatConfigs.recommended.rules : {}), // BEFORE TypeScript rules
     ...(isModule && isTypescript ? typescriptRules : {}),
-    'no-console': 'off', // OK in repo scripts
   },
 });
 
