@@ -46,7 +46,7 @@
     "@types/node": "^22.10.6",
     "@types/prop-types": "^15.7.14",
     "@types/react": "^19.0.7",
-    "@types/react-dom": "^19.0.2",
+    "@types/react-dom": "^19.0.3",
     "@typescript-eslint/eslint-plugin": "^8.20.0",
     "@typescript-eslint/parser": "^8.20.0",
     "babel-jest": "^29.7.0",
