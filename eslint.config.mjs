@@ -31,23 +31,32 @@ const basePlugins = {
   '@babel': babel, // @see https://www.npmjs.com/package/@babel/eslint-plugin
 };
 
-// @see https://www.npmjs.com/package/eslint-plugin-import
+const importPluginExtensions = [
+  '.js',
+  '.jsx',
+  '.cts',
+  '.mjs',
+  '.ts',
+  '.tsx',
+  '.cts',
+  '.mts',
+];
 const importPluginSettings = {
+  // @see https://www.npmjs.com/package/eslint-plugin-import
   'import/resolver': {
+    // @see https://www.npmjs.com/package/eslint-import-resolver-alias
+    alias: {
+      // also config eslint.config.mjs, tsconfig.json, and jest.config.mjs
+      map: [['^testingUtility$', './tools/tests/testingUtility.ts']],
+      extensions: importPluginExtensions,
+    },
+
     // @see https://www.npmjs.com/package/eslint-import-resolver-node
     node: {
-      extensions: [
-        '.js',
-        '.jsx',
-        '.cts',
-        '.mjs',
-        '.ts',
-        '.tsx',
-        '.cts',
-        '.mts',
-      ],
+      extensions: importPluginExtensions,
       moduleDirectory: ['node_modules', 'src/', 'tools/'],
     },
+
     // @see https://www.npmjs.com/package/eslint-import-resolver-typescript
     typescript: {
       alwaysTryTypes: true,

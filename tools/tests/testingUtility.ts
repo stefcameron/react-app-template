@@ -13,10 +13,8 @@ import { renderApp } from './testRenderers';
 //
 
 // re-export everything
-// eslint-disable-next-line import/export -- purposely exporting `render` TWICE and overwritting second time (below)
 export * from '@testing-library/react';
 
-// eslint-disable-next-line import/export -- override @testing-library/react's render() method exported above
 export { renderApp as render };
 
 export * from './testRenderers';

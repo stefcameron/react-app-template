@@ -83,6 +83,7 @@ const mkConfig = function () {
       path.resolve(__dirname, './tools/tests'),
     ],
 
+    // for aliases, also config eslint.config.mjs, webpack.config.mjs, and tsconfig.json
     moduleNameMapper: {
       '^testingUtility$': '<rootDir>/tools/tests/testingUtility.ts',
     },

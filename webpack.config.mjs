@@ -124,6 +124,9 @@ const mkConfig = function () {
         '.cjs': ['.cjs', '.cts'],
         '.mjs': ['.mjs', '.mts'],
       },
+      // alias: if you're using build-time aliases for import statements
+      //  (currently, the single alias, 'testingUtility', is only in test code, not built code)
+      //  (also config eslint.config.mjs, tsconfig.json, and jest.config.mjs)
     },
 
     optimization: {
