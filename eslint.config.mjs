@@ -31,8 +31,10 @@ const basePlugins = {
   '@babel': babel, // @see https://www.npmjs.com/package/@babel/eslint-plugin
 };
 
+// @see https://www.npmjs.com/package/eslint-plugin-import
 const importPluginSettings = {
   'import/resolver': {
+    // @see https://www.npmjs.com/package/eslint-import-resolver-node
     node: {
       extensions: [
         '.js',
@@ -46,6 +48,7 @@ const importPluginSettings = {
       ],
       moduleDirectory: ['node_modules', 'src/', 'tools/'],
     },
+    // @see https://www.npmjs.com/package/eslint-import-resolver-typescript
     typescript: {
       alwaysTryTypes: true,
     },
