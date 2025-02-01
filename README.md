@@ -39,18 +39,18 @@ and figure out why it isn't working if something comes up.
 Using the latest stable version of Node (v20) and NPM (v9.6)...
 
 ```bash
-$ npm install
 # installs all dependencies
-$ npm start
+$ npm install
 # opens a browser to localhost:3000
 # set PORT=XXXX in env to run on a different port
+$ npm start
 
-$ npm fmt
 # formats the code using Prettier
-$ npm build
+$ npm fmt
 # builds the production bundle
-$ npm build:dev
+$ npm build
 # builds the development bundle
+$ npm build:dev
 ```
 
 > 💬 If your browser doesn't open, please open it manually to `localhost:3000`
@@ -58,14 +58,16 @@ $ npm build:dev
 ## Testing
 
 ```bash
-$ npm test
 # checks formatting, linting, build, and tests
-$ npm run test:unit
+$ npm test
 # runs unit tests only
-$ npm run lint
+$ npm run test:unit
 # full format check (style, lint, typings)
-$ npm run fmt:check
+$ npm run lint
 # runs Prettier in verification mode only
+$ npm run fmt:check
+# formats the code and then checks for lint errors
+$ npm run verify
 ```
 
 ## Styles
