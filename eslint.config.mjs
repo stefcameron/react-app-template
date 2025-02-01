@@ -177,7 +177,7 @@ const baseRules = {
 
   //// ECMAScript 6 (non-stylistic issues only)
 
-  'no-duplicate-imports': ['error', { includeExports: true }],
+  'no-duplicate-imports': 'off', // replaced by more sophisticated 'import/no-duplicates'
   'no-useless-constructor': 'error',
   'no-var': 'error',
   'prefer-const': 'error',
@@ -189,6 +189,15 @@ const baseRules = {
 
 const toolingRules = {
   'no-console': 'off', // OK in repo scripts
+};
+
+//
+// ESM Import-specific rules
+//
+
+const importRules = {
+  ...importPlugin.flatConfigs.recommended.rules,
+  'import/no-duplicates': 'error',
 };
 
 //
@@ -309,7 +318,7 @@ const createToolingConfig = (isModule = true, isTypescript = false) => ({
   rules: {
     ...baseRules,
     ...toolingRules,
-    ...(isModule ? importPlugin.flatConfigs.recommended.rules : {}), // BEFORE TypeScript rules
+    ...(isModule ? importRules : {}), // BEFORE TypeScript rules
     ...(isModule && isTypescript ? typescriptRules : {}),
   },
 });
@@ -362,7 +371,7 @@ const createSourceJSConfig = (isReact = false) => ({
   },
   rules: {
     ...baseRules,
-    ...importPlugin.flatConfigs.recommended.rules,
+    ...importRules,
     ...(isReact ? reactRules : {}),
   },
 });
@@ -413,7 +422,7 @@ const createSourceTSConfig = (isReact = false) => ({
   },
   rules: {
     ...baseRules,
-    ...importPlugin.flatConfigs.recommended.rules, // BEFORE TypeScript rules
+    ...importRules, // BEFORE TypeScript rules
     ...typescriptRules,
     ...(isReact ? reactRules : {}),
   },
@@ -474,7 +483,7 @@ const createTestConfig = (isTypescript = false) => ({
   },
   rules: {
     ...baseRules,
-    ...importPlugin.flatConfigs.recommended.rules, // BEFORE TypeScript rules
+    ...importRules, // BEFORE TypeScript rules
     ...(isTypescript ? typescriptRules : {}),
     ...reactRules,
     ...testRules,
