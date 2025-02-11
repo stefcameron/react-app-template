@@ -26,8 +26,7 @@ const mkConfig = function () {
     transform: {
       '^.+\\.jsx?$': 'babel-jest',
       '^.+\\.tsx?$': 'ts-jest',
-      '.+\\.(css|styl|less|sass|scss|png|jpg|svg|ttf|woff|woff2|otf)$':
-        'jest-transform-stub',
+      '.+\\.(png|jpg|jpeg|gif|svg|ttf|woff|woff2|otf)$': 'jest-transform-stub',
     },
     transformIgnorePatterns: [
       // whitelist specific packages under node_modules (the entirety of which
@@ -86,6 +85,7 @@ const mkConfig = function () {
     // for aliases, also config eslint.config.mjs, webpack.config.mjs, and tsconfig.json
     moduleNameMapper: {
       '^testingUtility$': '<rootDir>/tools/tests/testingUtility.ts',
+      '.+\\.(css|less|scss|sass|styl)$': 'identity-obj-proxy',
     },
 
     setupFilesAfterEnv: ['<rootDir>/tools/tests/jestSetup.js'],
