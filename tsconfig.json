@@ -9,6 +9,7 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": false, // required to enable Babel (via ts-loader) to process resulting JS
+    "noErrorTruncation": true, // make sure TSC errors aren't truncated and fully readable
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
