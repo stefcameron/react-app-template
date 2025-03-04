@@ -1,11 +1,15 @@
-import { FC, PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, useState } from 'react';
 import './HelloWorld.css';
 
+// NOTE: if no `children`, then just use a plain interface, no inheritance needed
 interface Props extends PropsWithChildren {
   message?: string;
 }
 
-export const HelloWorld: FC<Props> = ({ message, children }) => {
+// NOTE: TypeScript automatically infers the return type as `JSX.Element`, even
+//  `JSX.Element | null` if all you do is just `return null`, perhaps based on
+//  the file type
+export const HelloWorld = ({ message, children }: Props) => {
   const [visible, setVisible] = useState(true);
 
   const handleClick = () => {

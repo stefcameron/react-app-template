@@ -1,6 +1,4 @@
-import { FC } from 'react';
-
-export const StylePreview: FC = () => {
+export const StylePreview = () => {
   return (
     <section>
       <h1>Header 1</h1>
