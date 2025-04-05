@@ -133,7 +133,7 @@ const mkConfig = function () {
               //  source that doesn't meet your configured targets, or other issues
               // @see https://babeljs.io/docs/options#rootmode
               rootMode: 'upward',
-            }
+            },
           },
         },
 
