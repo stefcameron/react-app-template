@@ -11,10 +11,8 @@ import fs from 'fs';
 import path from 'path';
 import url from 'url';
 import process from 'process';
-import { createRequire } from 'module';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { cloneDeep } from 'lodash-es';
 import webpack from 'webpack';
 
 //
@@ -22,7 +20,6 @@ import webpack from 'webpack';
 //
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-const require = createRequire(import.meta.url);
 const { DefinePlugin } = webpack;
 
 //
@@ -56,36 +53,6 @@ const getOpenConfig = function () {
   return {
     app,
   };
-};
-
-const loadBabelConfig = function () {
-  const filepath = path.resolve(__dirname, './babel.config.js');
-
-  // NOTE: we must use inline `require()` statements since the Babel config
-  //  files are JS files; we need to not only read them, but evaluate them
-  //  as JS in order to get the object we're seeking
-  // NOTE: clone because `require()` caches after the first read/load, and we want
-  //  to make sure we always return a brand new object to avoid inadvertent
-  //  overwrites from one build config to the next
-  const config = cloneDeep(require(filepath));
-
-  // check for env overrides
-  const babelEnv = process.env.BABEL_ENV || 'build';
-  if (config.env) {
-    if (config.env[babelEnv]) {
-      // when normally loaded by Babel with BABEL_ENV set, Babel will take the env
-      //  config as a set of overrides and merge it into the root config; we can
-      //  achieve the same here by taking the env config and moving it into an
-      //  'overrides' section in the root Babel config
-      const overrides = config.overrides || [];
-      overrides.push(config.env[babelEnv]);
-      config.overrides = overrides; // re-assign same (no change) or define new property
-    }
-
-    delete config.env; // no longer needed in this context
-  }
-
-  return config;
 };
 
 /**
@@ -152,7 +119,21 @@ const mkConfig = function () {
             loader: 'babel-loader',
             // NOTE: babel.config.js won't get loaded automatically by the loader because it's
             //  a JS file; the loader only auto-loads babelrc (JSON-based) files
-            options: loadBabelConfig(),
+            options: {
+              // cache results in default location `node_modules/.cache/babel-loaders`
+              // @see https://www.npmjs.com/package/babel-loader#options
+              cacheDirectory: true,
+              // walks upward from `options.root` directory (which is CWD by default), looking for
+              //  a directory containing a `babel.config.js` file, and throws an error if one is
+              //  is not found (preferred setting for monorepos, but also works for single repo
+              //  that uses a `babel.config.js` file instead of the variety of alternatives that
+              //  Babel supports)
+              // NOTE: without this, the loader will IGNORE your babel.config.js file and you'll
+              //  get unexpected compilation errors due to missing loaders, you'll get transpiled
+              //  source that doesn't meet your configured targets, or other issues
+              // @see https://babeljs.io/docs/options#rootmode
+              rootMode: 'upward',
+            }
           },
         },
 
