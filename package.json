@@ -73,7 +73,7 @@
     "jest-environment-jsdom": "^30.0.0",
     "jest-transform-stub": "^2.0.0",
     "lodash-es": "^4.17.21",
-    "prettier": "^3.5.3",
+    "prettier": "^3.6.0",
     "react": "^19.0.0",
     "react-dom": "^19.1.0",
     "rtvjs": "^5.0.0",
