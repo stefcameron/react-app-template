@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": false, // explicitly OFF; this rule does not enhance JavaScript at all except maybe 1% of the time when the distinction between "not defined" and "defined as undefined" truly matters in a specific implementation
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -21,7 +21,7 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "strictNullChecks": true, // required by `exactOptionalPropertyTypes`
+    "strictNullChecks": true, // `undefined` and `null` are treated as distinct types, which they are!
     "target": "ESNext", // latest version of ES supported by TypeScript version in use
     "typeRoots": [
       "./node_modules/@types",
