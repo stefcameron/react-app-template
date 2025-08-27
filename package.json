@@ -79,7 +79,7 @@
     "rtvjs": "^5.0.0",
     "style-loader": "^4.0.0",
     "ts-jest": "^29.4.1",
-    "ts-loader": "^9.5.2",
+    "ts-loader": "^9.5.4",
     "webpack": "^5.101.3",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2"
