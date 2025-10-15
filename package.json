@@ -64,7 +64,7 @@
     "eslint-plugin-jest-dom": "^5.5.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^6.1.1",
-    "eslint-plugin-testing-library": "^7.13.0",
+    "eslint-plugin-testing-library": "^7.13.3",
     "globals": "^16.4.0",
     "html-webpack-plugin": "^5.6.4",
     "identity-obj-proxy": "^3.0.0",
