@@ -23,11 +23,7 @@
     "strict": true,
     "strictNullChecks": true, // `undefined` and `null` are treated as distinct types, which they are!
     "target": "ESNext", // latest version of ES supported by TypeScript version in use
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/globals.d.ts",
-      "./tools/tests/globals.d.ts"
-    ],
+    "typeRoots": ["./node_modules/@types"],
     "useDefineForClassFields": true,
     "skipLibCheck": true
   },
