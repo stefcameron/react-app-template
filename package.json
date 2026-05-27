@@ -79,7 +79,7 @@
     "react-dom": "^19.2.6",
     "rtvjs": "^5.0.0",
     "style-loader": "^4.0.0",
-    "ts-jest": "^29.4.10",
+    "ts-jest": "^29.4.11",
     "ts-loader": "^9.5.7",
     "webpack": "^5.107.2",
     "webpack-cli": "^7.0.2",
