@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Simple React starter template",
   "engines": {
-    "node": "^20.11.0 || >=21.2.0"
+    "node": "^22.18.0 || >=24.11.0"
   },
   "scripts": {
     "build": "webpack",
