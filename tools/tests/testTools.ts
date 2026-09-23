@@ -2,8 +2,6 @@
 // Common testing utilities
 //
 
-/* eslint-env browser -- this code is executed in the context of JSDom */
-
 import { ReactNode } from 'react';
 import { JestAxeConfigureOptions, axe } from 'jest-axe';
 import { RenderOptions, RenderResult } from '@testing-library/react';

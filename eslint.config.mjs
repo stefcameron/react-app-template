@@ -2,19 +2,17 @@
 // ROOT ESLint Configuration
 //
 
-/* eslint-env node */
-
 import js from '@eslint/js';
 import globals from 'globals';
-import babel from '@babel/eslint-plugin';
-import babelParser from '@babel/eslint-parser';
 import typescript from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import prettier from 'eslint-config-prettier';
-import importPlugin from 'eslint-plugin-import';
+import importPlugin, {
+  flatConfigs as importFlatConfigs,
+} from 'eslint-plugin-import-x';
 import jest from 'eslint-plugin-jest';
 import jestDom from 'eslint-plugin-jest-dom';
-import react from 'eslint-plugin-react';
+import reactX from '@eslint-react/eslint-plugin';
 import reactHooks from 'eslint-plugin-react-hooks';
 import testingLibrary from 'eslint-plugin-testing-library';
 
@@ -27,9 +25,7 @@ const tsconfigRootDir = import.meta.dirname;
 //
 
 // Plugins that apply to ALL envs
-const basePlugins = {
-  '@babel': babel, // @see https://www.npmjs.com/package/@babel/eslint-plugin
-};
+const basePlugins = {};
 
 const importPluginExtensions = [
   '.js',
@@ -42,21 +38,19 @@ const importPluginExtensions = [
   '.mts',
 ];
 const importPluginSettings = {
-  // @see https://www.npmjs.com/package/eslint-plugin-import
-  'import/resolver': {
-    // @see https://www.npmjs.com/package/eslint-import-resolver-alias
-    alias: {
-      // also config eslint.config.mjs, tsconfig.json, and jest.config.mjs
-      map: [['^testingUtility$', './tools/tests/testingUtility.ts']],
-      extensions: importPluginExtensions,
-    },
-
+  // @see https://www.npmjs.com/package/eslint-plugin-import-x
+  'import-x/resolver': {
     // @see https://www.npmjs.com/package/eslint-import-resolver-node
     node: {
       extensions: importPluginExtensions,
       moduleDirectory: ['node_modules', 'src/', 'tools/'],
     },
 
+    // handles the 'testingUtility' alias too, via the tsconfig.json `paths` mapping
+    //  (also config eslint.config.mjs, tsconfig.json, and jest.config.mjs) -- this
+    //  made the eslint-import-resolver-alias package (and its explicit alias map)
+    //  redundant, which is good, because it forces a peer dependency on the classic
+    //  eslint-plugin-import, which doesn't support ESLint 10
     // @see https://www.npmjs.com/package/eslint-import-resolver-typescript
     typescript: {
       alwaysTryTypes: true,
@@ -177,7 +171,7 @@ const baseRules = {
 
   //// ECMAScript 6 (non-stylistic issues only)
 
-  'no-duplicate-imports': 'off', // replaced by more sophisticated 'import/no-duplicates'
+  'no-duplicate-imports': 'off', // replaced by more sophisticated 'import-x/no-duplicates'
   'no-useless-constructor': 'error',
   'no-var': 'error',
   'prefer-const': 'error',
@@ -196,8 +190,8 @@ const toolingRules = {
 //
 
 const importRules = {
-  ...importPlugin.flatConfigs.recommended.rules,
-  'import/no-duplicates': 'error',
+  ...importFlatConfigs.recommended.rules,
+  'import-x/no-duplicates': 'error',
 };
 
 //
@@ -205,21 +199,21 @@ const importRules = {
 //
 
 const reactRules = {
-  ...react.configs.flat.recommended.rules,
-  ...react.configs.flat['jsx-runtime'].rules,
+  ...reactX.configs.recommended.rules,
 
-  // not needed because we don't pre-compile React code, it just runs in the browser
-  'react/react-in-jsx-scope': 'off',
-
-  // PropTypes are deprecated and will be removed in React 19
-  // @see https://react.dev/blog/2024/04/25/react-19-upgrade-guide#removed-proptypes-and-defaultprops
-  'react/forbid-foreign-prop-types': 'off',
-  'react/prop-types': 'off',
+  // already covered by the react-hooks plugin below; avoid duplicate reporting
+  '@eslint-react/rules-of-hooks': 'off',
 
   //// React-Hooks Plugin
 
   // default is 'warn', prefer errors (warnings just get ignored)
+  'react-hooks/rules-of-hooks': 'error',
   'react-hooks/exhaustive-deps': 'error',
+};
+
+// @see https://www.npmjs.com/package/@eslint-react/eslint-plugin (settings.react-x)
+const reactSettings = {
+  ...reactX.configs.recommended.settings,
 };
 
 //
@@ -230,7 +224,7 @@ const typescriptRules = {
   ...typescript.configs['recommended-type-checked'].rules,
 
   // AFTER TypeScript rules to turn off `import` rules that TypeScript covers
-  ...importPlugin.flatConfigs.typescript.rules,
+  ...importFlatConfigs.typescript.rules,
 };
 
 //
@@ -288,12 +282,12 @@ const createToolingConfig = (isModule = true, isTypescript = false) => ({
   ignores: ['src/**/*.*', 'tools/tests/**/*.*'],
   plugins: {
     ...basePlugins,
-    ...(isModule ? { import: importPlugin } : {}),
+    ...(isModule ? { 'import-x': importPlugin } : {}),
     ...(isTypescript ? { '@typescript-eslint': typescript } : {}),
   },
   languageOptions: {
     ecmaVersion,
-    parser: isTypescript ? typescriptParser : babelParser,
+    parser: isTypescript ? typescriptParser : undefined,
     parserOptions: {
       sourceType: isModule ? 'module' : 'script',
       ...(isModule && isTypescript
@@ -332,22 +326,14 @@ const createSourceJSConfig = (isReact = false) => ({
   files: isReact ? ['src/**/*.{js,jsx}'] : ['src/**/*.js'],
   plugins: {
     ...basePlugins,
-    import: importPlugin,
-    ...(isReact ? { react, 'react-hooks': reactHooks } : {}),
+    'import-x': importPlugin,
+    ...(isReact ? { '@eslint-react': reactX, 'react-hooks': reactHooks } : {}),
   },
   languageOptions: {
     ecmaVersion,
-    parser: babelParser,
     parserOptions: {
-      ...(isReact
-        ? react.configs.flat['jsx-runtime'].languageOptions.parserOptions
-        : {}),
       sourceType: 'module',
       ecmaFeatures: {
-        ...(isReact
-          ? react.configs.flat['jsx-runtime'].languageOptions.parserOptions
-              .ecmaFeatures
-          : {}),
         impliedStrict,
         jsx: isReact,
       },
@@ -360,14 +346,7 @@ const createSourceJSConfig = (isReact = false) => ({
   },
   settings: {
     ...importPluginSettings,
-    ...(isReact
-      ? {
-          react: {
-            // a version must be specified; here it's set to detect the current version
-            version: 'detect',
-          },
-        }
-      : {}),
+    ...(isReact ? reactSettings : {}),
   },
   rules: {
     ...baseRules,
@@ -380,25 +359,18 @@ const createSourceTSConfig = (isReact = false) => ({
   files: isReact ? ['src/**/*.tsx'] : ['src/**/*.ts'],
   plugins: {
     ...basePlugins,
-    import: importPlugin,
+    'import-x': importPlugin,
     '@typescript-eslint': typescript,
-    ...(isReact ? { react, 'react-hooks': reactHooks } : {}),
+    ...(isReact ? { '@eslint-react': reactX, 'react-hooks': reactHooks } : {}),
   },
   languageOptions: {
     ecmaVersion,
     parser: typescriptParser,
     parserOptions: {
-      ...(isReact
-        ? react.configs.flat['jsx-runtime'].languageOptions.parserOptions
-        : {}),
       project: true,
       tsconfigRootDir,
       sourceType: 'module',
       ecmaFeatures: {
-        ...(isReact
-          ? react.configs.flat['jsx-runtime'].languageOptions.parserOptions
-              .ecmaFeatures
-          : {}),
         impliedStrict,
         jsx: isReact,
       },
@@ -411,14 +383,7 @@ const createSourceTSConfig = (isReact = false) => ({
   },
   settings: {
     ...importPluginSettings,
-    ...(isReact
-      ? {
-          react: {
-            // a version must be specified; here it's set to detect the current version
-            version: 'detect',
-          },
-        }
-      : {}),
+    ...(isReact ? reactSettings : {}),
   },
   rules: {
     ...baseRules,
@@ -440,19 +405,18 @@ const createTestConfig = (isTypescript = false) => ({
       ],
   plugins: {
     ...basePlugins,
-    import: importPlugin,
+    'import-x': importPlugin,
     ...(isTypescript ? { '@typescript-eslint': typescript } : {}),
     jest,
     'jest-dom': jestDom,
     'testing-library': testingLibrary,
-    react,
+    '@eslint-react': reactX,
     'react-hooks': reactHooks,
   },
   languageOptions: {
     ecmaVersion,
-    parser: isTypescript ? typescriptParser : babelParser,
+    parser: isTypescript ? typescriptParser : undefined,
     parserOptions: {
-      ...react.configs.flat['jsx-runtime'].languageOptions.parserOptions,
       ...(isTypescript
         ? {
             project: true,
@@ -461,8 +425,6 @@ const createTestConfig = (isTypescript = false) => ({
         : {}),
       sourceType: 'module',
       ecmaFeatures: {
-        ...react.configs.flat['jsx-runtime'].languageOptions.parserOptions
-          .ecmaFeatures,
         impliedStrict,
         jsx: true,
       },
@@ -476,10 +438,7 @@ const createTestConfig = (isTypescript = false) => ({
   },
   settings: {
     ...importPluginSettings,
-    react: {
-      // a version must be specified; here it's set to detect the current version
-      version: 'detect',
-    },
+    ...reactSettings,
   },
   rules: {
     ...baseRules,

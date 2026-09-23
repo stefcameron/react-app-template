@@ -4,8 +4,6 @@
 //  which wraps the 'ui' being tested into any necessary providers.
 //
 
-/* eslint-env browser -- this code is executed in the context of JSDom */
-
 import { renderApp } from './testRenderers';
 
 //
@@ -13,8 +11,10 @@ import { renderApp } from './testRenderers';
 //
 
 // re-export everything
+// eslint-disable-next-line import-x/export -- intentionally overriding `render` below
 export * from '@testing-library/react';
 
+// eslint-disable-next-line import-x/export -- intentionally overriding `render` above
 export { renderApp as render };
 
 export * from './testRenderers';

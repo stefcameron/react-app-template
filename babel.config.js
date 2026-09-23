@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 //
 // BABEL ESM SUPPORT
 //

@@ -2,8 +2,6 @@
 // All the various renderers for tests
 //
 
-/* eslint-env browser -- this code is executed in the context of JSDom */
-
 import { ReactNode } from 'react';
 import { RenderOptions, RenderResult, render } from '@testing-library/react';
 
