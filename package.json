@@ -28,7 +28,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^8.0.5",
-    "@babel/preset-env": "^8.0.5",
+    "@babel/preset-env": "^8.0.7",
     "@babel/preset-react": "^8.0.1",
     "@eslint-react/eslint-plugin": "^5.23.1",
     "@eslint/js": "^10.0.1",
